@@ -19,4 +19,21 @@
   .input {
     @apply border-purple border outline-none rounded-md w-full px-3 py-2 text-purple focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-200 focus:ring-opacity-50 dark:bg-black dark:border-white;
   }
+
+  .svg-red {
+    @apply filter;
+    filter: brightness(0) saturate(100%) invert(10%) sepia(94%) saturate(4632%)
+      hue-rotate(357deg) brightness(112%) contrast(117%);
+  }
+
+  .svg-purple {
+    @apply filter;
+    filter: brightness(0) saturate(100%) invert(43%) sepia(55%) saturate(5672%)
+      hue-rotate(230deg) brightness(104%) contrast(101%);
+  }
+
+  .svg-white {
+    @apply filter;
+    filter: brightness(0) invert(1);
+  }
 }

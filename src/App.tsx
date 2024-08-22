@@ -6,6 +6,7 @@ import pencilIcon from './assets/pencil.svg';
 import trashIcon from './assets/trash.svg';
 import plusIcon from './assets/plus.svg';
 import empty from './assets/empty.svg';
+import search from './assets/search.svg';
 
 import useNoteStore from './stores/noteStore';
 import useModalStore from './stores/modalStore';
@@ -175,14 +176,14 @@ function App() {
   };
 
   return (
-    <>
+    <div className='flex justify-center'>
       <div className='container h-screen font-kanit dark:bg-black'>
         <div className='relative h-full'>
           <div className='flex flex-col gap-6 pt-10'>
             <h1 className='text-3xl font-semibold text-center dark:text-white'>
               TODO LIST
             </h1>
-            <div className='flex gap-4'>
+            <div className='flex flex-wrap gap-4'>
               <div className='grow'>
                 <div className='relative w-full'>
                   <input
@@ -190,6 +191,11 @@ function App() {
                     className='border-purple border outline-none rounded-md w-full px-3 py-2 text-purple focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-200 focus:ring-opacity-50 dark:bg-black dark:border-white'
                     placeholder='Search note...'
                     type='text'
+                  />
+                  <img
+                    className='absolute -translate-y-8 right-4 dark:svg-white'
+                    src={search}
+                    alt='search'
                   />
                 </div>
               </div>
@@ -218,7 +224,7 @@ function App() {
               </div>
             )}
             <div className='flex justify-center'>
-              <div className='w-3/4 flex flex-col'>
+              <div className='w-full lg:w-3/4 flex flex-col'>
                 {filteredData?.map((note) => {
                   return (
                     <div
@@ -251,14 +257,18 @@ function App() {
                             className='w-[16px] h-[16px]'
                             onClick={() => handleDetailNote(note?.id)}
                           >
-                            <img src={pencilIcon} alt='edit' />
+                            <img
+                              className='hover:svg-purple'
+                              src={pencilIcon}
+                              alt='edit'
+                            />
                           </button>
                           <button
                             className='w-[16px] h-[16px]'
                             onClick={() => handleModalDelete(true)}
                           >
                             <img
-                              className='w-[16px] h-[16px] cursor-pointer'
+                              className='hover:svg-red'
                               src={trashIcon}
                               alt='delete'
                             />
@@ -422,7 +432,7 @@ function App() {
           </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 

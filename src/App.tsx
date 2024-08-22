@@ -176,8 +176,8 @@ function App() {
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className='container h-screen font-kanit dark:bg-black'>
+    <div className='flex justify-center dark:bg-black'>
+      <div className='container h-screen font-kanit '>
         <div className='relative h-full'>
           <div className='flex flex-col gap-6 pt-10'>
             <h1 className='text-3xl font-semibold text-center dark:text-white'>

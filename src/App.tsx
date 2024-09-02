@@ -10,15 +10,16 @@ import search from './assets/search.svg';
 
 import useNoteStore from './stores/noteStore';
 import useModalStore from './stores/modalStore';
+import useModeStore from './stores/modeStore';
 
 import Modal from './components/Modal';
 
 import { INote } from './types/note';
+import dateFormat from './utils/dateFormat';
 
 const DATA_FILTER = ['ALL', 'FINISHED', 'UNFINISHED', 'A-Z', 'Z-A'];
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
   const [filteredData, setFilteredData] = useState<INote[]>([]);
   const [id, setId] = useState<string>('');
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -44,33 +45,14 @@ function App() {
     changeDisplay: state.changeDisplay,
   }));
 
+  const { isDark, changeDark } = useModeStore((state) => ({
+    isDark: state.isDark,
+    changeDark: state.changeDark,
+  }));
+
   useEffect(() => {
     setFilteredData(notes);
   }, [notes]);
-
-  // dark mode
-  useEffect(() => {
-    const html = document.querySelector('html');
-    if (html && localStorage.getItem('darkMode') === 'true') {
-      html.classList.add('dark');
-      setDarkMode(true);
-    }
-  }, []);
-
-  const darkToggle = () => {
-    const html = document.querySelector('html');
-    if (html) {
-      if (!darkMode) {
-        html.classList.add('dark');
-        localStorage.setItem('darkMode', 'true');
-        setDarkMode(true);
-      } else {
-        html.classList.remove('dark');
-        localStorage.setItem('darkMode', 'false');
-        setDarkMode(false);
-      }
-    }
-  };
 
   // handle modal
   const handleModalNote = (type: boolean) => {
@@ -130,15 +112,20 @@ function App() {
     setIsDelete(false);
   };
 
+  // detail note
+  const detailNote = (id: string) => {
+    return notes.find((item) => item.id === id);
+  };
+
   // edit note
   const handleFinishNote = (id: string) => {
-    const payload = notes.find((item) => item.id === id);
+    const payload = detailNote(id);
     if (payload) editNote(id, { ...payload, finish: !payload.finish });
   };
 
   // show detail note
   const handleDetailNote = (id: string) => {
-    const payload = notes.find((item) => item.id === id);
+    const payload = detailNote(id);
     if (payload) {
       setIsEdit(true);
       setFormData(payload);
@@ -213,8 +200,8 @@ function App() {
                   </option>
                 ))}
               </select>
-              <button onClick={darkToggle} className='box-purple'>
-                <img src={darkMode ? sunIcon : moonIcon} alt='dark' />
+              <button onClick={changeDark} className='box-purple'>
+                <img src={isDark ? sunIcon : moonIcon} alt='dark' />
               </button>
             </div>
             {filteredData?.length === 0 && (
@@ -293,7 +280,9 @@ function App() {
                           } `}
                         >
                           Due:{' '}
-                          <span className='font-medium'>{note?.datetime}</span>
+                          <span className='font-medium'>
+                            {dateFormat(note?.datetime)}
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -392,13 +381,13 @@ function App() {
                   className='h-10 w-10 text-red-600'
                   fill='none'
                   viewBox='0 0 24 24'
-                  stroke-width='1.5'
+                  strokeWidth='1.5'
                   stroke='currentColor'
                   aria-hidden='true'
                 >
                   <path
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                     d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z'
                   />
                 </svg>

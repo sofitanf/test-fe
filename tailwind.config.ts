@@ -10,6 +10,9 @@ export default {
         black: '#252525',
       },
     },
+    fontFamily: {
+      inter: ['Inter', 'sans-serif'],
+    },
     container: {
       padding: {
         DEFAULT: '1rem',

@@ -1,6 +1,4 @@
-import { ReactNode } from 'react';
-import React from 'react';
-
+import React, { ReactNode } from 'react';
 interface ModalProps {
   children: ReactNode;
 }
